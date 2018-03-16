@@ -51,7 +51,7 @@ describe('AppComponent', () => {
       expect(component.count).toEqual(0);
       tick(250);
       expect(component.count).toEqual(0);
-      tick();
+      tick(251);
       expect(component.count).toEqual(1);
     }));
 
@@ -65,7 +65,7 @@ describe('AppComponent', () => {
       component.increment();
       tick(250);
       component.increment();
-      tick();
+      tick(501);
       expect(component.count).toEqual(1);
     }));
   });
