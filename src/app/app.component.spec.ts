@@ -9,7 +9,41 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
-  describe('increment()', () => {
+  describe('Test with timeouts', () => {
+    it('waits 500ms to increment on single click', (done) => {
+      const component = TestBed.createComponent(AppComponent).componentInstance;
+
+      component.increment();
+      setTimeout(() => {
+        expect(component.count).toEqual(0);
+        setTimeout(() => {
+          expect(component.count).toEqual(1);
+          done();
+        }, 251);
+      }, 250);
+    });
+
+    it('ignores multiple clicks less than 500ms apart', (done) => {
+      const component = TestBed.createComponent(AppComponent).componentInstance;
+
+      component.increment();
+      setTimeout(() => {
+        component.increment();
+        setTimeout(() => {
+          component.increment();
+          setTimeout(() => {
+            component.increment();
+            setTimeout(() => {
+              expect(component.count).toEqual(1);
+              done();
+            }, 501);
+          }, 250);
+        }, 250);
+      }, 250);
+    });
+  });
+
+  describe('Test with fakeAsync()', () => {
     it('waits 500ms to increment on single click', fakeAsync(() => {
       const component = TestBed.createComponent(AppComponent).componentInstance;
 
